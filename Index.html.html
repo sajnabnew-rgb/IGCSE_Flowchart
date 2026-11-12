@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flowchart Fixer – IGCSE Computer Science</title>
+<style>
+:root{--bg:#eef2f7;--card:#fff;--ink:#16202e;--mut:#5a6779;--line:#c7d0dc;--acc:#0f766e;--ok:#15803d;--okb:#dcfce7;--bad:#dc2626;--badb:#fee2e2;--T:#d1fae5;--P:#dbeafe;--D:#fef3c7;--IO:#ede9fe;--st:#334155;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1520;--card:#18212f;--ink:#e8edf5;--mut:#9aa7bb;--line:#33405a;--acc:#14b8a6;--ok:#4ade80;--okb:#123524;--bad:#f87171;--badb:#3b1a1f;--T:#134e3a;--P:#1e3a5f;--D:#5c4310;--IO:#3b2a6b;--st:#94a3b8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1520;--card:#18212f;--ink:#e8edf5;--mut:#9aa7bb;--line:#33405a;--acc:#14b8a6;--ok:#4ade80;--okb:#123524;--bad:#f87171;--badb:#3b1a1f;--T:#134e3a;--P:#1e3a5f;--D:#5c4310;--IO:#3b2a6b;--st:#94a3b8;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Trebuchet MS",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:12px}
+h1{font-size:1.4rem;margin:0;letter-spacing:.2px}
+.sub{color:var(--mut);font-size:.85rem}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.stats{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:5px 12px;text-align:center;min-width:76px}
+.stat b{display:block;font-size:1.25rem}.stat span{font-size:.72rem;color:var(--mut)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:9px 16px;font-weight:700;font-size:.9rem;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.mc ul{text-align:left;margin:8px 0;padding-left:20px}.mc li{margin:3px 0}.lnk{background:none;border:0;color:var(--acc);font-weight:700;text-decoration:underline;cursor:pointer;font-size:.95rem}
+.st th{text-align:left;font-size:.72rem;color:var(--mut);padding:2px 6px}.tw{overflow-x:auto}.dash{text-align:left}.dash p{margin:6px 0}
+.avs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:10px 0}.av{font-size:1.5rem;width:46px;height:46px;border-radius:50%;border:2px solid var(--line);background:var(--card);cursor:pointer}.av.on{border-color:var(--acc);background:var(--okb);transform:scale(1.12)}.fact{font-size:.85rem;color:var(--mut)}.we{color:var(--bad);min-height:1.2em;margin:4px 0}.mc input,.mc select{padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:.95rem;margin:2px}
+.cert{border:6px double var(--acc);padding:14px;border-radius:8px}.cn{font-size:1.7rem;font-weight:700;margin:4px 0}.st{width:100%;border-collapse:collapse;font-size:.8rem;margin:8px 0;text-align:left}.st td{border-bottom:1px solid var(--line);padding:2px 6px}
+@media print{:root:root:root:root{--bg:#fff;--card:#fff;--ink:#16202e;--mut:#5a6779;--line:#c7d0dc;--okb:#dcfce7;--acc:#0f766e}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{background:#fff!important}.wrap,.cf{display:none!important}.modal{position:static!important;background:none!important;display:block!important}.mc{max-height:none!important}.np{display:none}}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.tab{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:700;font-size:.82rem;cursor:pointer}.tab.on{background:var(--acc);color:#fff;border-color:var(--acc)}.tab:disabled{opacity:.5;cursor:not-allowed}
+.prog{height:12px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0 6px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--ok));transition:width .45s}
+.lvl{margin-bottom:8px}.lvl small{color:var(--mut)}
+.legend{display:flex;gap:6px;flex-wrap:wrap;font-size:.75rem;margin-bottom:8px}
+.legend span{padding:3px 9px;border-radius:6px;border:1px solid var(--line)}
+.fb{min-height:50px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--line);margin-bottom:10px}
+.fb.ok{background:var(--okb);border-color:var(--ok)}.fb.bad{background:var(--badb);border-color:var(--bad)}
+.main{display:grid;grid-template-columns:1fr 300px;gap:12px;align-items:start}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto;padding:6px}
+svg{display:block;margin:0 auto;width:100%;max-width:550px;min-width:440px;height:auto}
+.bank{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;position:sticky;top:8px}
+.bank h2{font-size:.9rem;margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 10px;border-radius:8px;background:var(--acc);color:#fff;font:600 .78rem ui-monospace,Menlo,Consolas,monospace;cursor:grab;touch-action:none;user-select:none;border:2px solid transparent}
+.chip.sel{border-color:var(--ink);transform:scale(1.05)}
+.chip.shake{animation:sh .4s}
+.ghost{position:fixed;z-index:99;pointer-events:none;opacity:.92;transform:translate(-50%,-50%) rotate(-3deg);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.ed{fill:none;stroke:var(--st);stroke-width:1.6}#ar path{fill:var(--st)}
+.el{font:700 11px sans-serif;fill:var(--ink)}
+.shp{stroke:var(--st);stroke-width:1.6}
+.T .shp{fill:var(--T)}.P .shp{fill:var(--P)}.D .shp{fill:var(--D)}.IO .shp{fill:var(--IO)}
+.tx{fill:var(--ink);font-size:11px;text-anchor:middle}.D .tx{font-size:10.5px}
+.slot{cursor:pointer}
+.slot:not(.done) .shp{fill:var(--card);stroke:var(--acc);stroke-dasharray:5 3;stroke-width:2}
+.slot:not(.done) .tx{fill:var(--acc);font-size:17px;font-weight:700}
+.slot.over:not(.done) .shp{fill:var(--okb);stroke-width:3}
+.slot.done .shp{stroke:var(--ok);stroke-width:2.2}
+.slot.shake{animation:sh .4s}.slot.pop{transform-box:fill-box;transform-origin:center;animation:pop .45s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pop{40%{transform:scale(1.12)}}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:16px}
+.mc{background:var(--card);border-radius:16px;padding:20px;max-width:540px;max-height:92vh;overflow:auto;text-align:center}
+.mc h2{margin:0 0 8px}.mc p{margin:6px 0}
+.cf{position:fixed;top:-14px;width:9px;height:14px;z-index:120;pointer-events:none;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(108vh) rotate(540deg)}}
+@media (max-width:820px){.main{grid-template-columns:1fr}.bank{position:sticky;bottom:0;top:auto;max-height:36vh;overflow:auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><div><h1>Flowchart Fixer</h1><div class="sub">IGCSE Computer Science 4CP0: complete the flowchart</div><div class="sub" id="who"></div></div>
+<div class="stats"><div class="stat"><b id="sc">0</b><span>Score</span></div><div class="stat"><b id="sk">0</b><span>Streak</span></div><div class="stat"><b id="ms">0</b><span>Mistakes</span></div><div class="stat"><b id="tm">0m 00s</b><span>Level time</span></div><button class="btn alt" id="rs">Reset level</button><button class="btn alt" onclick="scores()">Progress report</button><button class="btn alt" onclick="saveDlg()">Save progress</button><button class="btn alt" onclick="welcome()">Player</button><button class="btn alt" onclick="modal(INTRO.replace('welcome()','closeM()'))">Rules</button></div></div>
+<div class="prog"><i id="pb"></i></div>
+<div class="tabs" id="tabs"></div>
+<div class="lvl"><b id="lt"></b>: <span id="goal"></span> <small id="pt"></small></div>
+<div class="legend"><span style="background:var(--T)">Oval: start / end</span><span style="background:var(--P)">Rectangle: process</span><span style="background:var(--D)">Diamond: decision</span><span style="background:var(--IO)">Parallelogram: input / output</span></div>
+<div class="fb" id="fb"></div>
+<div class="main"><div class="chart" id="chart"></div><div class="bank"><h2 id="bh"></h2><div class="chips" id="chips"></div></div></div>
+</div><div class="modal" id="m"></div>
+<script>
+const N=(id,t,x,y,s,h)=>({id,t,x,y,s,h}),E=(p,l)=>({p,l}),M=140,R=395;
+const LV=[
+{name:'Pass or fail',goal:'Ask for an exam mark. If it is 50 or more display “Pass”, otherwise display “Fail”.',vh:410,
+nodes:[N('a','T',M,30,'START'),N('b','IO',M,100,'RECEIVE mark','Start by getting the exam mark from the user.'),N('c','D',M,195,'mark ≥ 50 ?','A decision asks a Yes/No question. A pass means 50 or more.'),N('d','IO',R,195,'SEND “Pass” TO DISPLAY','The Yes branch: the mark was high enough.'),N('e','IO',M,300,'SEND “Fail” TO DISPLAY','The No branch: the mark was too low.'),N('f','T',M,370,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,153]]),E([[235,195],[295,195]],['Yes',262,187]),E([[140,237],[140,278]],['No',152,262]),E([[140,322],[140,348]]),E([[395,217],[395,370],[240,370]])],
+extra:['mark ≤ 50 ?','mark = 50 ?','SEND mark TO DISPLAY','SET mark TO 50','RECEIVE pass']},
+{name:'Level 1, Running total',goal:'Keep asking for numbers and adding them up. Stop when 0 is entered, then display the total.',vh:480,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET total TO 0','Make sure the total starts at nothing before any numbers are added.'),N('c','IO',M,170,'RECEIVE number','The first number must be entered before the loop can test it.'),N('d','D',M,265,'number ≠ 0 ?','A diamond asks a Yes/No question. Keep looping while the number is NOT the stop value.'),N('e','P',R,265,'SET total TO total + number','Inside the loop: update the total using its old value and the new number.'),N('f','IO',R,340,'RECEIVE number','Get the next number so the loop condition can be checked again.'),N('g','IO',M,370,'SEND total TO DISPLAY','The loop has finished (No branch). Show the answer.'),N('h','T',M,440,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,148]]),E([[140,192],[140,223]]),E([[140,307],[140,348]],['No',152,330]),E([[235,265],[295,265]],['Yes',262,257]),E([[395,287],[395,318]]),E([[495,340],[520,340],[520,205],[140,205]]),E([[140,392],[140,418]])],
+extra:['SET total TO 1','number = 0 ?','SET total TO number','SEND number TO DISPLAY','RECEIVE total']},
+{name:'Level 2, Times table',goal:'Display the 3 times table for the numbers 1 to 5, using a counter.',vh:410,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET count TO 1','The counter needs a starting value. The table starts at 1.'),N('c','D',M,195,'count ≤ 5 ?','Keep looping while the counter has not gone past 5. Think carefully about ≤ versus <.'),N('d','IO',R,195,'SEND count × 3 TO DISPLAY','Inside the loop: display the current line of the 3 times table.'),N('e','P',R,270,'SET count TO count + 1','Move the counter on, or the loop will never end!'),N('f','IO',M,300,'SEND “Finished” TO DISPLAY','The No branch: the loop is over, so tell the user.'),N('g','T',M,370,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,151]]),E([[235,195],[295,195]],['Yes',262,187]),E([[395,217],[395,248]]),E([[495,270],[520,270],[520,135],[140,135]]),E([[140,237],[140,278]],['No',152,262]),E([[140,322],[140,348]])],
+extra:['SET count TO 0','count < 5 ?','count ≥ 5 ?','SET count TO count × 3','SEND count TO DISPLAY']},
+{name:'Age check',goal:'Ask for an age between 1 and 120. Keep asking until a valid age is entered.',vh:410,
+nodes:[N('a','T',M,30,'START'),N('b','IO',M,100,'RECEIVE age','Ask for the age before it can be checked.'),N('c','D',M,195,'age < 1 OR|age > 120 ?','Loop while the age is INVALID: too low OR too high. Which word means either condition is enough?'),N('d','IO',R,195,'SEND “Invalid” TO DISPLAY','Inside the loop: tell the user the age was not valid.'),N('e','IO',R,270,'RECEIVE age','Ask again so the loop condition is checked again.'),N('f','IO',M,300,'SEND “Thank you” TO DISPLAY','The loop has ended (No branch): the age is valid.'),N('g','T',M,370,'END')],
+edges:[],extra:['age < 1 AND|age > 120 ?','age ≥ 1 OR|age ≤ 120 ?','age > 1 OR|age < 120 ?','SEND age TO DISPLAY','SET age TO 0']},
+{name:'Level 3, Password checker',goal:'Give the player up to 3 attempts. Then say whether they got in or were locked out.',vh:700,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET attempts TO 0','Counting starts before the first guess. How many attempts have been used so far?'),N('c','IO',M,170,'RECEIVE guess','The player enters a first guess before the loop checks it.'),N('d','D',M,265,'guess ≠ password|AND attempts < 3 ?','Loop while the guess is wrong AND attempts are left. Check both parts of the condition.'),N('e','P',R,265,'SET attempts TO attempts + 1','Inside the loop, one more attempt has been used: increase the counter.'),N('f','IO',R,335,'SEND “Try again” TO DISPLAY','The guess was wrong, so tell the player.'),N('g','IO',R,405,'RECEIVE guess','Ask for another guess so the loop condition can be tested again.'),N('h','D',M,500,'guess = password ?','The loop ended for one of two reasons. Ask the question that tells them apart.'),N('i','IO',M,590,'SEND “Welcome” TO DISPLAY','Yes branch: the password was correct, so give a positive message.'),N('j','IO',R,590,'SEND “Locked out” TO DISPLAY','No branch: they ran out of attempts.'),N('k','T',M,660,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,148]]),E([[140,192],[140,223]]),E([[235,265],[295,265]],['Yes',262,257]),E([[395,287],[395,313]]),E([[395,357],[395,383]]),E([[495,405],[520,405],[520,205],[140,205]]),E([[140,307],[140,458]],['No',152,340]),E([[140,542],[140,568]],['Yes',152,560]),E([[235,500],[395,500],[395,568]],['No',262,492]),E([[140,612],[140,638]]),E([[395,612],[395,660],[240,660]])],
+extra:['guess = password|AND attempts < 3 ?','guess ≠ password|OR attempts < 3 ?','guess ≠ password|AND attempts > 3 ?','SET attempts TO 3','SET attempts TO attempts - 1','guess ≠ password ?','SEND password TO DISPLAY']},
+{name:'Pass counter',goal:'Read 5 marks. Count how many are 50 or more, then display that count.',vh:570,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET passes TO 0','The pass counter starts at zero before any marks are checked.'),N('c','P',M,170,'SET count TO 1','This counter tracks which mark we are on, starting at the first.'),N('d','D',M,265,'count ≤ 5 ?','Loop while there are still marks to read (5 in total).'),N('e','IO',R,265,'RECEIVE mark','Inside the loop: get the next mark.'),N('f','D',R,350,'mark ≥ 50 ?','A decision inside the loop: is this mark a pass?'),N('g','P',R,455,'SET passes TO passes + 1','Yes branch: add one to the pass counter.'),N('h','P',R,525,'SET count TO count + 1','Both branches join here: move on to the next mark.'),N('i','IO',M,380,'SEND passes TO DISPLAY','The loop has finished: show how many marks passed.'),N('j','T',M,450,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,148]]),E([[140,192],[140,223]]),E([[235,265],[295,265]],['Yes',262,257]),E([[395,287],[395,308]]),E([[395,392],[395,433]],['Yes',402,418]),E([[395,477],[395,503]]),E([[300,350],[270,350],[270,490],[395,490]],['No',272,342]),E([[495,525],[520,525],[520,205],[140,205]]),E([[140,307],[140,358]],['No',152,335]),E([[140,402],[140,428]])],
+extra:['SET passes TO 1','count < 5 ?','mark ≤ 50 ?','SET passes TO passes + mark','SEND count TO DISPLAY','RECEIVE count']},
+{name:'Average mark',goal:'Read 5 marks, then calculate and display the average.',vh:560,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET total TO 0','The running total starts at zero.'),N('c','P',M,170,'SET count TO 0','Counting marks starts at zero.'),N('d','D',M,265,'count < 5 ?','The counter starts at 0, so it runs for 5 marks. Check < versus ≤.'),N('e','IO',R,265,'RECEIVE mark','Inside the loop: read the next mark.'),N('f','P',R,335,'SET total TO total + mark','Add the new mark to the running total.'),N('g','P',R,405,'SET count TO count + 1','One more mark has been read.'),N('h','P',M,380,'SET average TO total / 5','The loop has finished: divide the total by the number of marks.'),N('i','IO',M,450,'SEND average TO DISPLAY','Show the result.'),N('j','T',M,520,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,148]]),E([[140,192],[140,223]]),E([[235,265],[295,265]],['Yes',262,257]),E([[395,287],[395,313]]),E([[395,357],[395,383]]),E([[495,405],[520,405],[520,205],[140,205]]),E([[140,307],[140,358]],['No',152,335]),E([[140,402],[140,428]]),E([[140,472],[140,498]])],
+extra:['SET total TO 1','count ≤ 5 ?','SET average TO total × 5','SET average TO total + 5','SEND total TO DISPLAY']},
+{name:'Largest number',goal:'Read 5 numbers and display the largest one.',vh:570,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET largest TO 0','The largest starts at 0, so any positive number will beat it.'),N('c','P',M,170,'SET count TO 1','This counter tracks which number we are on.'),N('d','D',M,265,'count ≤ 5 ?','Loop while there are still numbers to read.'),N('e','IO',R,265,'RECEIVE number','Inside the loop: read the next number.'),N('f','D',R,350,'number > largest ?','Is the new number bigger than the largest so far?'),N('g','P',R,455,'SET largest TO number','Yes: this is the new largest.'),N('h','P',R,525,'SET count TO count + 1','Both branches join here: move on to the next number.'),N('i','IO',M,380,'SEND largest TO DISPLAY','The loop has finished: show the answer.'),N('j','T',M,450,'END')],
+edges:[],extra:['number < largest ?','SET largest TO 1','SET largest TO count','SEND number TO DISPLAY','count < 5 ?']},
+{name:'Pass and fail counter',goal:'Keep reading marks until 0 is entered. Count the passes (50 or more) and the fails, then display both.',vh:710,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET passes TO 0','Both counters must start at zero.'),N('c','P',M,165,'SET fails TO 0','The second counter also starts at zero.'),N('d','IO',M,230,'RECEIVE mark','Read the first value before the loop tests it.'),N('e','D',M,325,'mark ≠ 0 ?','Keep looping until the stop value 0 is entered, so loop while the value is NOT 0.'),N('f','D',M,495,'mark ≥ 50 ?','A decision inside the loop: is this mark a pass (50 or more)?'),N('g','P',R,495,'SET passes TO passes + 1','Yes branch: add one to the first counter.'),N('h','P',M,585,'SET fails TO fails + 1','No branch: add one to the other counter.'),N('i','IO',M,665,'RECEIVE mark','Both branches join here: read the next value, then return to the loop test.'),N('j','IO',R,315,'SEND passes TO DISPLAY','Loop finished: display the first counter.'),N('k','IO',R,375,'SEND fails TO DISPLAY','Now display the second counter.'),N('l','T',R,435,'END')],
+edges:[E([[140,52],[140,78]]),E([[140,122],[140,143]]),E([[140,187],[140,208]]),E([[140,252],[140,283]]),E([[140,367],[140,453]],['Yes',152,410]),E([[235,325],[295,325]],['No',262,317]),E([[395,337],[395,353]]),E([[395,397],[395,413]]),E([[235,495],[295,495]],['Yes',262,487]),E([[140,537],[140,563]],['No',152,555]),E([[395,517],[395,625],[140,625]]),E([[140,607],[140,643]]),E([[40,665],[20,665],[20,268],[140,268]])],
+extra:['SET passes TO 1','mark = 0 ?','mark ≤ 50 ?','SET fails TO fails - 1','SEND mark TO DISPLAY','RECEIVE passes']},
+{name:'Even and odd counter',goal:'Keep reading numbers until 0 is entered. Count the even and the odd numbers, then display both.',vh:710,nodes:[],edges:[],
+extra:['number MOD 2 = 1 ?','number = 0 ?','SET evens TO 1','SET odds TO odds - 1','SEND number TO DISPLAY','RECEIVE evens']},
+{name:'Savings goal',goal:'Keep adding weekly deposits until the savings reach 100 or more. Count the weeks, then display the average saved per week.',vh:560,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET savings TO 0','Savings start at nothing.'),N('c','P',M,170,'SET weeks TO 0','Count the weeks from zero.'),N('d','D',M,265,'savings < 100 ?','Keep saving while the target of 100 has NOT been reached yet.'),N('e','IO',R,265,'RECEIVE deposit','Inside the loop: enter this week’s deposit.'),N('f','P',R,335,'SET savings TO savings + deposit','Add the deposit to the savings so far.'),N('g','P',R,405,'SET weeks TO weeks + 1','One more week has passed.'),N('h','P',M,380,'SET weekly TO savings / weeks','Average per week is the total saved divided by the number of weeks.'),N('i','IO',M,450,'SEND weekly TO DISPLAY','Show the result.'),N('j','T',M,520,'END')],
+edges:[],extra:['savings > 100 ?','savings ≤ 100 ?','SET weekly TO savings × weeks','SET weeks TO weeks - 1','SEND savings TO DISPLAY']},
+{name:'Lucky seven',goal:'The player has 3 guesses at the lucky number 7. Each correct guess scores 10 points. Display the score at the end.',vh:570,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET score TO 0','The score starts at zero.'),N('c','P',M,170,'SET tries TO 0','No guesses have been made yet.'),N('d','D',M,265,'tries < 3 ?','The player has 3 guesses, counting from 0. Check < versus ≤.'),N('e','IO',R,265,'RECEIVE guess','Inside the loop: read the player’s guess.'),N('f','D',R,350,'guess = 7 ?','A decision inside the loop: is the guess the lucky number?'),N('g','P',R,455,'SET score TO score + 10','Yes branch: reward the player with 10 points.'),N('h','P',R,525,'SET tries TO tries + 1','Both branches join here: one more guess has been used.'),N('i','IO',M,380,'SEND score TO DISPLAY','The loop has ended: show the final score.'),N('j','T',M,450,'END')],
+edges:[],extra:['SET score TO 10','tries ≤ 3 ?','guess ≠ 7 ?','SET score TO score + tries','SEND tries TO DISPLAY','RECEIVE tries']},
+{name:'PIN entry',goal:'A cash machine gives 3 attempts at the PIN 1234. Then it either pays out or blocks the card.',vh:700,
+nodes:[N('a','T',M,30,'START'),N('b','P',M,100,'SET tries TO 0','No PINs have been tried yet.'),N('c','IO',M,170,'RECEIVE pin','Read the first PIN before the loop checks it.'),N('d','D',M,265,'pin ≠ 1234|AND tries < 3 ?','Loop while the PIN is wrong AND attempts are left. Check both parts.'),N('e','P',R,265,'SET tries TO tries + 1','Inside the loop, one more attempt has been used.'),N('f','IO',R,335,'SEND “Wrong PIN” TO DISPLAY','The PIN was wrong, so tell the user.'),N('g','IO',R,405,'RECEIVE pin','Ask for another PIN so the loop condition can be tested again.'),N('h','D',M,500,'pin = 1234 ?','The loop ended for one of two reasons. Was the PIN correct?'),N('i','IO',M,590,'SEND “Cash out” TO DISPLAY','Yes branch: the PIN was correct, so the machine pays out.'),N('j','IO',R,590,'SEND “Blocked” TO DISPLAY','No branch: they ran out of attempts.'),N('k','T',M,660,'END')],
+edges:[],extra:['pin = 1234|AND tries < 3 ?','pin ≠ 1234|OR tries < 3 ?','pin ≠ 1234|AND tries > 3 ?','SET tries TO 3','SET tries TO tries - 1','pin ≠ 1234 ?','SEND pin TO DISPLAY']}
+];
+LV[3].edges=LV[2].edges;LV[7].edges=LV[5].edges;LV[9].edges=LV[8].edges;LV[10].edges=LV[6].edges;LV[11].edges=LV[5].edges;LV[12].edges=LV[4].edges;
+const EO=['START','SET evens TO 0','SET odds TO 0','RECEIVE number','number ≠ 0 ?','number MOD 2 = 0 ?','SET evens TO evens + 1','SET odds TO odds + 1','RECEIVE number','SEND evens TO DISPLAY','SEND odds TO DISPLAY','END'];
+LV[9].nodes=LV[8].nodes.map((n,i)=>({...n,s:EO[i]}));LV[9].nodes[5].h='MOD gives the remainder after dividing. An even number leaves remainder 0 when divided by 2.';
+const FULL=[...LV];LV.splice(0,LV.length,...[0,1,2,3,10,4,5,11,6,7,12,8,9].map(i=>FULL[i]));
+const $=s=>document.querySelector(s),esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const W=200,H=44,DW=190,DH=84,NM={IO:'input/output (parallelogram)',D:'decision (diamond)',P:'process (rectangle)'};
+const kind=t=>/^(SEND|RECEIVE)/.test(t)?'IO':/\?$/.test(t)?'D':'P';
+let ST=[],t0=Date.now(),curLi=0,ls=[],pname='',pyear='',pav='🤖',unlocked=0,li=0,score=0,streak=0,mist=0,totMist=0,startScore=0,done={},tries={},bank=[],sel=null,locked=false,drag=null;
+const lv=()=>LV[li],ttl=()=>`Level ${li+1}, ${lv().name.replace(/^Level \d, /,'')}`,svgEl=()=>$('#chart svg');
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function shape(n){const d=n.t=='D',w=d?DW:W,h=d?DH:H,x=n.x,y=n.y;
+ if(n.t=='T'||n.t=='P')return `<rect class="shp" x="${x-w/2}" y="${y-h/2}" width="${w}" height="${h}" rx="${n.t=='T'?22:3}"/>`;
+ if(n.t=='IO')return `<polygon class="shp" points="${x-w/2+14},${y-h/2} ${x+w/2},${y-h/2} ${x+w/2-14},${y+h/2} ${x-w/2},${y+h/2}"/>`;
+ return `<polygon class="shp" points="${x},${y-h/2} ${x+w/2},${y} ${x},${y+h/2} ${x-w/2},${y}"/>`}
+function lab(n,t){const l=t.split('|');return l.map((s,i)=>`<tspan x="${n.x}" y="${n.y+4+(i-(l.length-1)/2)*13}">${esc(s)}</tspan>`).join('')}
+function build(){tick();curLi=li;const v=lv();done={};tries={};mist=0;streak=0;locked=false;sel=null;startScore=score;
+ bank=shuffle(v.nodes.filter(n=>n.h).map(n=>n.s).concat(v.extra).map((s,i)=>({id:'c'+i,t:s})));
+ let h=`<svg viewBox="0 0 550 ${v.vh}" role="img" aria-label="Flowchart to complete"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>`;
+ v.edges.forEach(e=>{h+=`<polyline class="ed" points="${e.p.join(' ')}" marker-end="url(#ar)"/>`;if(e.l)h+=`<text class="el" x="${e.l[1]}" y="${e.l[2]}">${e.l[0]}</text>`});
+ v.nodes.forEach(n=>{h+=`<g class="n ${n.t}${n.h?' slot':''}" data-id="${n.id}"${n.h?` data-slot="${n.id}"`:''}>${shape(n)}<text class="tx">${lab(n,n.h?'?':n.s)}</text></g>`});
+ $('#chart').innerHTML=h+'</svg>';$('#lt').textContent=ttl();$('#goal').textContent=v.goal;
+ fb('','Drag an instruction from the bank into a dashed shape (or tap an instruction, then tap a shape). The shape tells you what kind of instruction fits.');render()}
+function render(){tabs();who();const tot=lv().nodes.filter(n=>n.h).length,d=Object.keys(done).length;
+ $('#sc').textContent=score;$('#sk').textContent=streak;$('#ms').textContent=mist;$('#pb').style.width=d/tot*100+'%';$('#pt').textContent=`(${d} of ${tot} shapes complete)`;
+ $('#bh').textContent=`Instruction bank (${bank.length} left)`;
+ $('#chips').innerHTML=bank.map(c=>`<div class="chip${sel==c.id?' sel':''}" data-cid="${c.id}">${esc(c.t.replace('|',' '))}</div>`).join('')}
+function fb(k,h){const f=$('#fb');f.className='fb '+k;f.innerHTML=h}
+function attempt(cid,sid){const ch=bank.find(c=>c.id==cid),n=lv().nodes.find(x=>x.id==sid);if(!ch||!n||done[sid]||locked)return;sel=null;
+ const g=svgEl().querySelector(`[data-id="${sid}"]`);
+ if(ch.t===n.s){done[sid]=1;streak++;const p=10+Math.min(streak-1,4)*2;score+=p;bank=bank.filter(c=>c!==ch);
+  g.classList.add('done','pop');g.querySelector('text').innerHTML=lab(n,n.s);
+  fb('ok',`${pav} ${['Nice one!','Correct!','Spot on!','Great thinking!'][Math.floor(Math.random()*4)]} +${p} points${streak>1?` (streak bonus ×${streak})`:''}`)}
+ else{mist++;streak=0;score=Math.max(0,score-3);tries[sid]=(tries[sid]||0)+1;
+  g.classList.remove('shake');void g.getBoundingClientRect();g.classList.add('shake');
+  const el=$(`.chip[data-cid="${cid}"]`);if(el){el.classList.add('shake')}
+  let m=kind(ch.t)!==n.t?`That’s a ${NM[kind(ch.t)]} instruction, but this shape is a ${NM[n.t]}.`:n.h;
+  if(tries[sid]>=2)m+=` Clue: the answer starts with “${esc(n.s.replace('|',' ').slice(0,7))}”.`;
+  fb('bad',`Not quite, −3 points. ${m}`)}
+ render();
+ if(Object.keys(done).length==lv().nodes.filter(x=>x.h).length)finish()}
+function finish(){locked=true;const ok=mist==0;totMist+=mist;tick();const s=sg(li);s.a++;s.m+=mist;if(ok&&!s.p){s.p=s.a;s.tp=s.t}
+ if(ok){score+=20;const g=score-startScore,p=ls[li]||0;ls[li]=Math.max(p,g);score=startScore+(ls[li]-p);unlocked=Math.max(unlocked,li+1);confetti()}else score=startScore;save();
+ render();
+ setTimeout(()=>modal(ok?`<h2>${ttl()} complete!</h2><p style="font-size:2rem">⭐⭐⭐</p><p>Perfect run with no mistakes! +20 bonus. Score: ${score}. Progress saved.</p><button class="btn" onclick="next()">${li<LV.length-1?'Unlock next level':'See results'}</button>`:`<h2>So close!</h2><p>You made ${mist} mistake${mist>1?'s':''}. To unlock the next level, complete this one with no mistakes.</p><p>Use the hints and try again. The instructions are shuffled each time.</p><button class="btn" onclick="retry()">Try again</button>`),700)}
+function retry(){closeM();score=startScore;build()}
+function go(i){if(i>unlocked||i==li)return;if(!locked)score=startScore;li=i;build()}
+function tabs(){$('#tabs').innerHTML=LV.map((v,i)=>`<button class="tab${i==li?' on':''}" ${i>unlocked?'disabled':''} onclick="go(${i})">${i>unlocked?'🔒 ':i<unlocked?'✓ ':''}Level ${i+1}</button>`).join('')}
+function next(){closeM();if(li<LV.length-1){li++;build()}else{cert();return;const r=totMist==0?'Flowchart Master':totMist<=5?'Algorithm Ace':'Keep practising, you’re improving';
+ confetti();modal(`<h2>All levels complete!</h2><p style="font-size:1.6rem"><b>${score}</b> points</p><p>Total mistakes: ${totMist}</p><p>Rank: <b>${r}</b></p><button class="btn" onclick="restart()">Play again</button>`)}}
+function restart(){closeM();li=0;score=0;totMist=0;ls=[];ST=[];unlocked=0;save();build()}
+function who(){$('#who').textContent=pname?`${pav} ${pname}, ${pyear}`:''}
+function welcome(){const F=['Flowcharts were first used by industrial engineers in 1921 to describe work processes.','A loop with no way out is an infinite loop, so every flowchart loop needs an exit!','The word “algorithm” comes from the name of the Persian mathematician al-Khwarizmi.','Programmers often plan with flowcharts or pseudocode before writing a single line of code.'],AV=['🤖','🚀','🦊','🐉','🧠','⚡','🎮','🦄'],YR=['Year 9','Year 10','Year 11','Year 12','Year 13'],saved=ls.some(x=>x!=null);
+ modal(`<h2>Flowchart Fixer</h2><p>The Algorithm Academy’s flowcharts have been scrambled by a glitch. Repair all ${LV.length} to earn your certificate.</p><p><button class="lnk" onclick="modal(INTRO)">📖 Read the rules first</button></p><p>Pick your avatar:</p><div class="avs">${AV.map(a=>`<button class="av${a==pav?' on':''}" onclick="pav='${a}';welcome()">${a}</button>`).join('')}</div><p><input id="pn" placeholder="Your name" value="${esc(pname).replace(/"/g,'&quot;')}" oninput="pname=this.value"><select id="py" onchange="pyear=this.value"><option value="">Year group</option>${YR.map(y=>`<option${y==pyear?' selected':''}>${y}</option>`).join('')}</select></p><p class="we" id="we"></p><p class="fact">Did you know? ${F[Math.floor(Math.random()*F.length)]}</p>${dash()}<button class="btn" onclick="begin()">${saved?'Continue mission':'Start mission'}</button> <button class="btn alt" onclick="modal(INTRO)">Rules</button>${saved?' <button class="btn alt" onclick="newPlayer()">New player (clears progress)</button>':''}`)}
+function saveCode(){return btoa(unescape(encodeURIComponent(JSON.stringify({u:unlocked,l:ls,m:totMist,n:pname,y:pyear,a:pav,s:ST}))))}
+function saveDlg(){save();modal(`<h2>Save your progress</h2><p>Your progress is saved automatically in this browser each time you pass a level. To carry on from another device, copy this code and keep it safe.</p><textarea id="sc2" readonly rows="4" style="width:100%">${saveCode()}</textarea><p><button class="btn" onclick="cp()">Copy code</button></p><h3 style="margin:10px 0 4px">Load a saved code</h3><textarea id="lc" rows="3" style="width:100%" placeholder="Paste your code here"></textarea><p class="we" id="le"></p><p><button class="btn alt" onclick="loadCode()">Load progress</button> <button class="btn alt" onclick="closeM()">Close</button></p>`)}
+function cp(){const t=$('#sc2');t.select();try{navigator.clipboard.writeText(t.value)}catch(_){try{document.execCommand('copy')}catch(__){}}const e=$('#le');e.style.color='var(--ok)';e.textContent='Code copied.'}
+function loadCode(){const e=$('#le');e.style.color='var(--bad)';try{const d=JSON.parse(decodeURIComponent(escape(atob($('#lc').value.trim()))));if(!d||!Array.isArray(d.l))throw 0;
+ unlocked=Math.min(d.u|0,LV.length);ls=d.l.slice(0,LV.length).map(x=>x==null?null:+x||0);ST=(Array.isArray(d.s)?d.s:[]).map(s=>s?{a:+s.a||0,t:+s.t||0,m:+s.m||0,p:+s.p||0,tp:+s.tp||0}:null);totMist=d.m|0;pname=String(d.n||'').slice(0,40);pyear=String(d.y||'').slice(0,12);pav=esc(String(d.a||'🤖')).slice(0,4);score=ls.reduce((a,b)=>a+(b||0),0);save();li=Math.min(unlocked,LV.length-1);build();closeM();welcome()}catch(_){e.textContent='That code did not work. Check that you copied all of it.'}}
+function isThis(){modal(`<h2>Welcome back!</h2><p style="font-size:2.4rem;margin:4px">${pav}</p><p>Is this still <b>${esc(pname)}</b>${pyear?' ('+esc(pyear)+')':''}?</p><button class="btn" onclick="welcome()">Yes, that’s me</button> <button class="btn alt" onclick="newPlayer()">No, I’m someone else</button><p class="fact">Choosing “No” clears the saved progress on this browser and starts a new player.</p>`)}
+function begin(){pname=pname.trim();if(!pname||!pyear){$('#we').textContent='Please enter your name and choose a year group.';return}save();closeM();who()}
+function newPlayer(){pname='';pyear='';ls=[];ST=[];unlocked=0;score=0;totMist=0;li=0;save();build();welcome()}
+const SK='flowchartFixerV2';
+function save(){try{localStorage.setItem(SK,JSON.stringify({u:unlocked,l:ls,m:totMist,n:pname,y:pyear,a:pav,s:ST}))}catch(_){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(SK)||'null');if(d){unlocked=d.u|0;ls=Array.isArray(d.l)?d.l:[];totMist=d.m|0;ST=Array.isArray(d.s)?d.s:[];pname=d.n||'';pyear=d.y||'';pav=d.a||'🤖';score=ls.reduce((a,b)=>a+(b||0),0)}}catch(_){}}
+function rank(){return totMist==0?'Flowchart Master':totMist<=15?'Algorithm Ace':'Flowchart Finisher'}
+function tbl(){return `<table class="st">`+LV.map((v,i)=>`<tr><td>Level ${i+1}</td><td>${v.name.replace(/^Level \d, /,'')}</td><td>${ls[i]!=null?ls[i]+' pts':'not yet'}</td></tr>`).join('')+`</table>`}
+function scores(){modal(`<h2>Progress and analysis report</h2><p>${pav} <b>${esc(pname)||'Player'}</b>${pyear?', '+esc(pyear):''}. Flowchart Fixer, IGCSE Computer Science (Edexcel 4CP0). ${new Date().toLocaleDateString()}</p>${dash()}<p class="np"><button class="btn" onclick="print()">Print or save as PDF</button> <button class="btn alt" onclick="closeM()">Close</button></p>`)}
+const sg=i=>ST[i]||(ST[i]={a:0,t:0,m:0}),fmt=ms=>{const s=Math.round((ms||0)/1000);return Math.floor(s/60)+'m '+String(s%60).padStart(2,'0')+'s'};
+function tick(){const n=Date.now();if(t0){sg(curLi).t+=n-t0;t0=n}}
+function pause(){tick();t0=0}
+function resume(){t0=Date.now()}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else if($('#m').style.display!='flex')resume()});
+setInterval(()=>{const s=ST[li]||{};$('#tm').textContent=fmt((s.t||0)+(t0?Date.now()-t0:0))},1000);
+function dash(){const n=LV.length,d=Math.min(unlocked,n),g=k=>ST.reduce((a,s)=>a+(s&&s[k]||0),0),
+ rows=LV.map((v,i)=>{const s=ST[i]||{},stt=i<unlocked?'✓ Passed':i==unlocked?'▶ Current':'🔒 Locked';return `<tr><td>${i+1}. ${esc(v.name.replace(/^Level \d, /,''))}</td><td>${stt}</td><td>${s.a||0}${s.p?` (passed on #${s.p})`:''}</td><td>${fmt(s.t)}</td><td>${s.m||0}</td><td>${ls[i]!=null?ls[i]:'-'}</td></tr>`}).join(''),
+ hard=LV.map((v,i)=>[i,(ST[i]||{}).m||0]).sort((a,b)=>b[1]-a[1])[0],slow=LV.map((v,i)=>[i,(ST[i]||{}).t||0]).sort((a,b)=>b[1]-a[1])[0];
+ return `<div class="dash"><p><b>Progress: ${d} of ${n} levels passed</b></p><div class="prog"><i style="width:${d/n*100}%"></i></div><div class="stats" style="justify-content:center">${[['Score',score],['Attempts',g('a')],['Time',fmt(g('t'))],['Mistakes',g('m')]].map(x=>`<div class="stat"><b>${x[1]}</b><span>${x[0]}</span></div>`).join('')}</div><div class="tw"><table class="st"><tr><th>Level</th><th>Status</th><th>Attempts</th><th>Time</th><th>Mistakes</th><th>Best</th></tr>${rows}</table></div><p class="fact">${hard[1]?`Most mistakes: Level ${hard[0]+1}. `:''}${slow[1]?`Most time spent: Level ${slow[0]+1} (${fmt(slow[1])}).`:'Play a level to see your analysis here.'}</p></div>`}
+function cert(){confetti();modal(`<div class="cert"><h2>${pav} Certificate of Achievement</h2><p>This certifies that</p><p class="cn"><span id="cn">${esc(pname)||'your name here'}</span></p><p>${pyear?'('+esc(pyear)+') ':''}has completed all ${LV.length} levels of Flowchart Fixer for IGCSE Computer Science (Edexcel 4CP0), finishing every level with no mistakes.</p><p>Total score: <b>${score}</b> points. Rank: <b>${rank()}</b></p>${tbl()}<p>${new Date().toLocaleDateString()}</p></div><p class="np"><input id="pn" placeholder="Type your name" value="${esc(pname).replace(/"/g,'&quot;')}" oninput="pname=this.value;$('#cn').textContent=pname||'your name here';save()"></p><p class="np"><button class="btn" onclick="print()">Print or save as PDF</button> <button class="btn alt" onclick="restart()">Play again</button></p>`)}
+function modal(h){pause();$('#m').innerHTML=`<div class="mc">${h}</div>`;$('#m').style.display='flex'}
+function closeM(){$('#m').style.display='none';resume()}
+function confetti(){for(let i=0;i<40;i++){const s=document.createElement('i');s.className='cf';s.style.cssText=`left:${Math.random()*100}vw;background:hsl(${Math.random()*360},80%,60%);animation-delay:${Math.random()*.4}s`;document.body.appendChild(s);setTimeout(()=>s.remove(),2600)}}
+const slotAt=e=>{const s=document.elementFromPoint(e.clientX,e.clientY);const g=s&&s.closest('[data-slot]');return g&&!g.classList.contains('done')?g:null};
+const clearOver=()=>document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));
+$('#chips').addEventListener('pointerdown',e=>{const c=e.target.closest('.chip');if(!c||locked)return;e.preventDefault();drag={c,x:e.clientX,y:e.clientY,moved:false,g:null};try{c.setPointerCapture(e.pointerId)}catch(_){}});
+addEventListener('pointermove',e=>{if(!drag)return;
+ if(!drag.moved&&Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6){drag.moved=true;drag.g=drag.c.cloneNode(true);drag.g.className='chip ghost';document.body.appendChild(drag.g);drag.c.style.opacity=.3}
+ if(drag.moved){drag.g.style.left=e.clientX+'px';drag.g.style.top=e.clientY+'px';clearOver();const s=slotAt(e);if(s)s.classList.add('over')}});
+addEventListener('pointerup',e=>{if(!drag)return;const d=drag;drag=null;d.c.style.opacity='';if(d.g)d.g.remove();clearOver();
+ if(d.moved){const s=slotAt(e);if(s)attempt(d.c.dataset.cid,s.dataset.slot)}else{sel=sel==d.c.dataset.cid?null:d.c.dataset.cid;render()}});
+addEventListener('pointercancel',()=>{if(drag){if(drag.g)drag.g.remove();drag.c.style.opacity='';drag=null;clearOver()}});
+$('#chart').addEventListener('click',e=>{const s=e.target.closest('[data-slot]');if(s&&sel)attempt(sel,s.dataset.slot)});
+$('#rs').onclick=()=>{score=startScore;build()};
+const INTRO=(`<h2>Rules and how to play</h2><p>Complete each flowchart by dropping the right instruction into every dashed shape.</p><p>Correct: +10 points plus streak bonuses. Wrong: −3 points and a hint. Finish a level with no mistakes to unlock the next one (and earn +20). Your progress is saved in this browser on this computer, so open the game in the same browser to continue. Print your report or certificate to keep a copy. Finishing every level earns a certificate.</p><ul><li>Drag an instruction onto a dashed shape, or tap the instruction and then tap the shape.</li><li>The shape tells you the type of instruction: oval for start and end, rectangle for a process, diamond for a decision, parallelogram for input and output.</li><li>You can try a level as many times as you like. The instructions are shuffled each attempt.</li><li>Your attempts, mistakes and time are recorded in your progress report, which you can print or save as a PDF.</li><li>Press Save progress to get a code you can use to carry on from another device.</li></ul><div class="legend" style="justify-content:center"><span style="background:var(--T)">Oval: start / end</span><span style="background:var(--P)">Rectangle: process</span><span style="background:var(--D)">Diamond: decision</span><span style="background:var(--IO)">Parallelogram: input / output</span></div><button class="btn" onclick="welcome()">Back</button>`);
+try{localStorage.removeItem('flowchartFixerV1')}catch(_){}load();li=Math.min(unlocked,LV.length-1);build();if(pname)isThis();else welcome();
+</script></body></html>
